@@ -1,0 +1,36 @@
+MONGO DB
+
+C:\Program Files\MongoDB\Server\6.0\data\
+
+C:\Program Files\MongoDB\Server\6.0\log\
+
+// make a db directory once.
+cd C:\
+md "\data\db"                      
+
+"C:\Program Files\MongoDB\Server\6.0\bin\mongod.exe" --dbpath="c:\data\db"
+
+
+mongosh
+show dbs
+
+----------------------------
+use newDb  (This will create a new db)
+
+show collections
+
+db.createCollection("users"); (this will create a new collection)
+
+ db.users.insertOne({id:1,username:'Harshal',age:27});
+ 
+ 
+ db.users.find()
+ 
+ db.users.updateOne({id:2},{$set:{username:'Rishabh'}})
+ 
+ db.users.deleteOne({id:3})..
+ 
+ 
+ 
+ mongodb://localhost:27017  db connection string.
+ 
