@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
-const port = 3000;
 const db = require('./db.js');
+require('dotenv').config();
+
+const port = process.env.PORT || 3000;
 
 
 // Importing body-parser and bodyParser.json() converts it into object and makes it available for request.body
@@ -45,6 +47,7 @@ app.post('/menu', async (req,res) =>{
     res.status(500).json(err);
   }
 })
+
 
 
 

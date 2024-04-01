@@ -1,9 +1,11 @@
 // import mongoose 
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Define URL to your mongoDb database
 
-const mongoURL = 'mongodb://0.0.0.0:27017/hotels';
+// const mongoURL = process.env.MONGO_URL_LOCAL
+const mongoURL = process.env.MONGO_URL_ONLINE_ATLAS;
 
 // Set up mongoDB connection
 mongoose.connect(mongoURL,{
