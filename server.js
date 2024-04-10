@@ -19,34 +19,15 @@ app.get('/', (req, res) => {
 
 //Import the router files
 const personRoutes = require('./routes/personRoutes.js');
+const menuRoutes = require('./routes/menuRoutes.js');
 
 //Use the router files
 app.use('/',personRoutes);
+app.use('/',menuRoutes);
 
 
 
-// app.get('/patience', (req, res) => {
-//     res.send('Patience is power.Learn to control. Real control is total freedom');
-//   })
 
-// app.get('/idli', (req, res) => {
-//     res.send({idle:true, count:100,isChutney:true});
-//   })
-
-app.post('/menu', async (req,res) =>{
-  try{
-    const data = req.body;
-    const newMenuItem = new MenuItem(data);
-
-    const response = await newMenuItem.save();
-    res.status(200).json(response);
-    
-  }
-  catch(err){
-    console.log("failed to save data");
-    res.status(500).json(err);
-  }
-})
 
 
 

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-const menuItemSchema = new mongoose.Schema({
+//Define the Menu Schema 
+
+const menuSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -27,8 +29,11 @@ const menuItemSchema = new mongoose.Schema({
         type:Number,
         default: 0,
     }
-})
 
-// Create Model and export it 
-const MenuItem = mongoose.model('MenuItem',menuItemSchema);
+});
+
+
+// Create model and export it
+
+const MenuItem = mongoose.model('MenuItem',menuSchema)
 module.exports = MenuItem;
