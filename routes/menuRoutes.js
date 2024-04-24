@@ -3,7 +3,7 @@ const router = express.Router()
 
 const MenuItem = require('../models/menu.js')
 
-router.get('/menu', async (req,res)=>{
+router.get('/', async (req,res)=>{
     try{
         const data = await MenuItem.find();
         console.log("Data retrieval successful");
@@ -18,7 +18,7 @@ router.get('/menu', async (req,res)=>{
 })
 
 
-router.post('/menu', async (req,res)=>{
+router.post('/', async (req,res)=>{
     try{
         const data = req.body
 
