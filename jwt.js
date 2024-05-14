@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const jsonAuthMiddleware = (req, res,next) =>{
+const jwtAuthMiddleware = (req, res,next) =>{
 
     //first check if request header has authorization or not
-    console.log("Request header is",req.headers.authorization);
+    
     const authorization = req.headers.authorization
     console.log(authorization);
     if(!authorization){
@@ -20,6 +20,7 @@ const jsonAuthMiddleware = (req, res,next) =>{
 
         //Attach the userinformation to request object
         req.user = decoded;
+        console.log(req.user);
         next();
 
     }catch(err){
@@ -36,4 +37,4 @@ const generateToken = (userData) =>{
     return jwt.sign(userData, process.env.JWT_SECRET)
 
 }
-module.exports = {jsonAuthMiddleware,generateToken};
+module.exports = {jwtAuthMiddleware,generateToken};

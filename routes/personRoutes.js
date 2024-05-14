@@ -3,9 +3,28 @@ const router = express.Router();
 
 const Person = require('../models/person.js');
 
-const {generateToken, jsonAuthMiddleware} = require('../jwt');
+const {generateToken, jwtAuthMiddleware} = require('../jwt');
 
-router.get('/person',jsonAuthMiddleware,async (req,res)=>{
+
+//Profile Route
+router.get('/profile',jwtAuthMiddleware, async (req,res)=>{
+  try{
+
+    const userId = req.user.id;
+    console.log(userId);
+    const user = await Person.findById(userId);
+    res.status(200).json(user);
+  }
+  catch(err){
+    
+    console.log(err);
+    res.status(500).json({error:'Internal server error'});
+  }
+
+})
+
+// GET method to get the person
+router.get('/',jwtAuthMiddleware,async (req,res)=>{
     try{
       const data = await Person.find();
       console.log('data retrieval successful');
@@ -18,26 +37,7 @@ router.get('/person',jsonAuthMiddleware,async (req,res)=>{
   })
 
 
-// app.post('/person', (req, res) => {
-
-//   const data = req.body;
-//   console.log("Data agaya");
-//   const newPer = new Person(data);
-
-//   newPer.save((error,savedPerson)=>{
-//     if(error){
-//       console.log("error saving the person data",error);
-//       res.status(500).json({error:"Internal server error"})
-//     }
-//     else{
-//       console.log("Data saved successfully");
-//       res.status(200).json(savedPerson);
-//     }
-//   })
-  
-
-// })
-
+//POST route to add a new person
 router.post('/signup', async (req, res) => {
     try{
     const data = req.body;
@@ -60,7 +60,7 @@ router.post('/signup', async (req, res) => {
   
   
   
-  router.get('/person/:workType', async (req,res)=>{
+  router.get('/:workType', async (req,res)=>{
     try{
         const workType = req.params.workType;
         if(workType=='chef' || workType=='manager' || workType=='waiter')
@@ -84,7 +84,7 @@ router.post('/signup', async (req, res) => {
 
 
   // Update API
-router.put('/person/:id', async (req, res)=>{
+router.put('/:id', async (req, res)=>{
     try{
         const personId = req.params.id;
         const updatedPersonData = req.body;
@@ -110,7 +110,7 @@ router.put('/person/:id', async (req, res)=>{
 
   })
   
-
+  //Login Route
   router.post('/login', async (req, res)=>{
     try{
         const {username,password}=req.body;
@@ -137,5 +137,28 @@ router.put('/person/:id', async (req, res)=>{
     }
   })
   
+  
+
+  //DELETE route to delete person
+  router.delete('/:id', async (req, res) => {
+    try{
+        const personId = req.params.id; // Extract the person's ID from the URL parameter
+        
+        // Assuming you have a Person model
+        const response = await Person.findByIdAndDelete(personId);
+        if (!response) {
+            return res.status(404).json({ error: 'Person not found' });
+        }
+        console.log('data delete');
+        res.status(200).json({message: 'person Deleted Successfully'});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+})
+
+
+
+
 
 module.exports = router;  
